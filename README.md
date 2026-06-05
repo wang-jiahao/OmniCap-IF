@@ -1,6 +1,6 @@
-# OmniCap-IF: Benchmarking and Improving Instruction Following Abilities for Omni-Video Captioning
+# **OmniCap-IF: Benchmarking and Improving Instruction Following Abilities for Omni-Video Captioning**
 
-[![Project Page](https://img.shields.io/badge/Project%20Page-OmniCap--IF-1B2838?logo=githubpages&logoColor=white)](https://wang-jiahao.github.io/OmniCap-IF/)
+[![Project Page](https://img.shields.io/badge/Project%20Page-OmniCap--IF-1B2838?logo=githubpages&logoColor=white)](https://nju-link.github.io/OmniCap-IF/)
 &nbsp;
 [![Model 7B](https://img.shields.io/badge/Model-OmniCaptioner--IF--7B-2563eb)](https://huggingface.co/NJU-LINK/OmniCaptioner-IF-7B)
 &nbsp;
@@ -10,52 +10,99 @@
 &nbsp;
 [![Testset](https://img.shields.io/badge/Testset-OmniCap--IF-d97706)](https://huggingface.co/datasets/NJU-LINK/OmniCap-IF)
 
-## Introduction
+## Overview
 
-This repository contains a Python pipeline for generating per-video `check_result` files from:
-- prompt definitions (`annotation/prompts.json`)
-- checklist definitions (`annotation/checklists.json`)
+**OmniCap-IF** is a benchmark for evaluating instruction-following abilities in omni-modal video captioning. It evaluates both format correctness and content correctness across visual, audio, and audio-visual constraints, with temporal grounding for fine-grained spatio-temporal verification.
 
-A small example set of videos is included under `videos/`
+<p align="center">
+  <img src="docs/static/images/overview_framework.png" width="92%" alt="OmniCap-IF evaluation framework">
+</p>
 
-The GitHub Pages source lives in [`docs/`](docs/).
+---
 
-## Folder layout
+## Quick Start
 
-- `generate_check_result.py`: main multi-threaded pipeline.
-- `annotation/`: prompts, checklists, video metadata.
-- `llm_judge/`: meta-prompts for format and content judging.
-- `utils/`: format checking and helper utilities.
-- `videos/`: example video clips.
+### Clone
 
-## Quick start
+```bash
+git clone https://github.com/NJU-LINK/OmniCap-IF.git
+cd OmniCap-IF
+```
 
-### 1) Install dependencies
+### Installation
 
 ```bash
 pip install openai google-genai tqdm pandas openpyxl
 ```
 
-### 2) Prepare API keys
+### Usage
 
-The pipeline may read local keys from `api.json` or environment variables, depending on the judge/model backend.
-
-### 3) Run the pipeline
-
-Run the default example (uses `response/example_model_response.json` and `annotation/`):
+Generate per-video check results from prompt and checklist annotations:
 
 ```bash
-python generate_check_result.py --models example_model --meta_dir ./annotation --response_dir ./response --output_dir ./check_result
+python generate_check_result.py \
+  --models example_model \
+  --meta_dir ./annotation \
+  --response_dir ./response \
+  --output_dir ./check_result
 ```
 
-## Compute metrics
-
-After `check_result/<MODEL>_check_result.json` files are generated, you can compute summary metrics (CSR/ISR and breakdowns).
-
-### Run
-
-Compute metrics for specific models:
+Compute CSR/ISR metrics:
 
 ```bash
 python metrics.py --models example_model
+```
+
+---
+
+## Evaluation on OmniCap-IF
+
+Download the OmniCap-IF testset from Hugging Face:
+
+```bash
+hf download NJU-LINK/OmniCap-IF --repo-type dataset --local-dir OmniCap-IF-testset
+```
+
+Prepare model responses under `response/`:
+
+```text
+response/
+  YourModel/
+    001.json
+    002.json
+    ...
+```
+
+Run checklist-based evaluation:
+
+```bash
+export JUDGE_API_KEY=YOUR_KEY
+export JUDGE_MODEL=gpt-5-mini
+
+python generate_check_result.py \
+  --models YourModel \
+  --meta_dir ./annotation \
+  --response_dir ./response \
+  --output_dir ./check_result
+
+python metrics.py --models YourModel
+```
+
+---
+
+## License
+
+Our dataset is under the CC-BY-NC-SA-4.0 license.
+
+---
+
+## Citation
+
+```bibtex
+@article{wang2026omnicapif,
+  title   = {OmniCap-IF: Benchmarking and Improving Instruction Following Abilities for Omni-Video Captioning},
+  author  = {Wang, Jiahao and Ping, An and Wang, Yanghai and Zhang, Yuanxing and Li, Shihao and Bian, Hanyan and Ren, Yichi and Zhang, Yize and Wang, Han and Chen, Haowen and Li, Junze and Wang, Jiaqi and Hu, Yiyang and Xu, Zhuze and Zhang, Zijie and Liu, Jiaheng},
+  journal = {Preprint},
+  year    = {2026}
+}
 ```
