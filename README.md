@@ -106,8 +106,8 @@ with torch.inference_mode():
         **inputs,
         use_audio_in_video=True,
         return_audio=False,
-        thinker_max_new_tokens=4096,
-        talker_max_tokens=4096
+        thinker_max_new_tokens=1536,
+        talker_max_tokens=1536
     )
 
 response = processor.decode(text_ids[0][inputs.input_ids[0].size(0):], skip_special_tokens=True)
