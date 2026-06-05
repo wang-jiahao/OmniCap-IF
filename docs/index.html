@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OmniCap-IF</title>
+  <meta name="description" content="OmniCap-IF: Benchmarking and Improving Instruction Following Abilities for Omni-Video Captioning" />
+  <link rel="icon" type="image/jpeg" href="./static/images/icon.jpg" />
+  <link rel="stylesheet" href="./static/css/style.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <h1 class="title"><span>OmniCap-IF: Benchmarking and Improving</span><span>Instruction Following Abilities</span><span>for Omni-Video Captioning</span></h1>
+
+      <div class="authorline">
+        <div class="authorrow">
+          <a class="author" href="https://wang-jiahao.github.io/">Jiahao Wang</a><sup>1,*</sup>,
+          <a class="author" href="#">An Ping</a><sup>1,*</sup>,
+          <a class="author" href="#">Yanghai Wang</a><sup>1,*</sup>,
+          <a class="author" href="#">Yuanxing Zhang</a><sup>2</sup>,
+          <a class="author" href="#">Shihao Li</a><sup>1</sup>,
+          <a class="author" href="#">Hanyan Bian</a><sup>1</sup>
+        </div>
+        <div class="authorrow">
+          <a class="author" href="#">Yichi Ren</a><sup>1</sup>,
+          <a class="author" href="#">Yize Zhang</a><sup>1</sup>,
+          <a class="author" href="#">Han Wang</a><sup>1</sup>,
+          <a class="author" href="#">Haowen Chen</a><sup>1</sup>,
+          <a class="author" href="#">Junze Li</a><sup>1</sup>,
+          <a class="author" href="#">Jiaqi Wang</a><sup>1</sup>
+        </div>
+        <div class="authorrow">
+          <a class="author" href="#">Yiyang Hu</a><sup>1</sup>,
+          <a class="author" href="#">Zhuze Xu</a><sup>1</sup>,
+          <a class="author" href="#">Zijie Zhang</a><sup>1</sup>,
+          <a class="author" href="https://liujiaheng.github.io/">Jiaheng Liu</a><sup>1,&dagger;</sup>
+        </div>
+      </div>
+
+      <div class="affils">
+        <div><sup>1</sup> NJU-LINK Team, Nanjing University</div>
+        <div><sup>2</sup> Kling Team, Kuaishou Technology</div>
+        <div class="note"><sup>*</sup> Equal Contribution &nbsp;&nbsp; <sup>&dagger;</sup> Corresponding Author</div>
+        <div class="note emails">jiahaowang@smail.nju.edu.cn &middot; liujiaheng@nju.edu.cn</div>
+      </div>
+
+      <div class="btnrow">
+        <a class="pbtn" href="#" title="Paper link placeholder"><img class="ico" src="./static/images/arxiv-logomark-small.svg" alt="arXiv" /><span>Paper</span></a>
+        <a class="pbtn" href="https://github.com/wang-jiahao/OmniCap-IF" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>Code</span></a>
+        <a class="pbtn" href="https://huggingface.co/datasets/NJU-LINK/OmniCap-IF" target="_blank" rel="noopener"><span class="btn-emoji">&#129303;</span><span>Testset</span></a>
+        <a class="pbtn" href="#leaderboard"><span class="btn-emoji">&#127942;</span><span>Leaderboard</span></a>
+      </div>
+
+      <div class="btnrow resource-row" aria-label="Release links">
+        <a class="pbtn" href="https://huggingface.co/NJU-LINK/OmniCaptioner-IF-7B" target="_blank" rel="noopener"><span class="btn-emoji">&#129303;</span><span>Model (7B)</span></a>
+        <a class="pbtn" href="https://huggingface.co/NJU-LINK/OmniCaptioner-IF-3B" target="_blank" rel="noopener"><span class="btn-emoji">&#129303;</span><span>Model (3B)</span></a>
+        <a class="pbtn" href="https://huggingface.co/datasets/NJU-LINK/OmniCap-IF-54K" target="_blank" rel="noopener"><span class="btn-emoji">&#129303;</span><span>Trainset</span></a>
+      </div>
+
+      <nav class="mininav">
+        <a href="#abstract">Abstract</a><span>&middot;</span>
+        <a href="#benchmark">Benchmark</a><span>&middot;</span>
+        <a href="#leaderboard">Leaderboard</a><span>&middot;</span>
+        <a href="#dataset-samples">Dataset Samples</a><span>&middot;</span>
+        <a href="#error-examples">Error Examples</a><span>&middot;</span>
+        <a href="#citation">BibTeX</a>
+      </nav>
+    </section>
+
+    <a class="corner-badge" href="https://github.com/wang-jiahao/OmniCap-IF" target="_blank" rel="noopener">
+      <img src="./static/images/njulinkv6.jpg" alt="NJU-LINK Team" />
+    </a>
+
+    <section class="section" id="abstract">
+      <h2>Abstract</h2>
+      <p>
+        Omni-modal Large Language Models can process audio and visual streams jointly, but their ability to
+        strictly follow complex, multi-faceted user instructions remains underexplored. OmniCap-IF addresses
+        this gap with a benchmark for controllable omni-video captioning that evaluates both structural
+        format correctness and fine-grained content correctness.
+      </p>
+      <p>
+        OmniCap-IF contains 1,920 high-quality samples from 480 videos and spans 50 constraint types across
+        format, visual, audio, and audio-visual modalities. The benchmark also incorporates temporal grounding
+        to assess spatio-temporal precision. Based on a curated 54K instruction-tuning set, OmniCap-IF-54K,
+        the OmniCaptioner-IF models improve both complex instruction adherence and general omni-modal captioning.
+      </p>
+      <figure class="card figure">
+        <img src="./static/images/overview_framework.png" alt="Overview of the OmniCap-IF evaluation framework" />
+        <figcaption><b>Overview.</b> OmniCap-IF evaluates generated captions with a checklist-driven dual mechanism for format, temporal, and content constraints.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="benchmark">
+      <h2>OmniCap-IF Benchmark</h2>
+      <div class="metric-grid">
+        <div class="metric-card"><b>1,920</b><span>high-quality instruction samples</span></div>
+        <div class="metric-card"><b>480</b><span>curated omni-modal videos</span></div>
+        <div class="metric-card"><b>50</b><span>format, visual, audio, and audio-visual constraints</span></div>
+        <div class="metric-card"><b>54.6s</b><span>average video duration</span></div>
+      </div>
+      <p>
+        The constraint taxonomy separates objective structural requirements from semantic content requirements.
+        Content constraints are further decomposed into visual, audio, and audio-visual dimensions, allowing
+        the evaluation to diagnose where a model loses instruction fidelity.
+      </p>
+      <figure class="card figure">
+        <img src="./static/images/dataset_statistics.png" alt="Dataset statistics for OmniCap-IF" />
+        <figcaption><b>Dataset statistics.</b> OmniCap-IF covers diverse durations, video categories, constraint counts, and constraint types.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="trainset">
+      <h2>OmniCap-IF-54K and OmniCaptioner-IF</h2>
+      <p>
+        OmniCap-IF-54K is a large-scale instruction-tuning dataset of 54K video-instruction-response triplets.
+        Its generation pipeline decouples evaluation data from training data, filters videos for audio-visual
+        richness, synthesizes constraint-aware instructions, and uses a decomposed response strategy to preserve
+        content correctness under complex format requirements.
+      </p>
+      <figure class="card figure">
+        <img src="./static/images/trainset_pipeline.png" alt="Training set generation pipeline" />
+        <figcaption><b>Training pipeline.</b> The pipeline curates high-quality videos, synthesizes constraint-aware instructions, decomposes content and format constraints, and generates re-formatted responses.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="leaderboard">
+      <h2>Leaderboard</h2>
+      <p class="muted">Main evaluation results on OmniCap-IF. CSR denotes Constraint Satisfaction Rate and ISR denotes Instruction Satisfaction Rate.</p>
+      <div class="tablewrap leaderboard-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2">Model</th>
+              <th colspan="2">Overall</th>
+              <th colspan="2">Format</th>
+              <th colspan="5">Content</th>
+            </tr>
+            <tr>
+              <th>CSR</th>
+              <th>ISR</th>
+              <th>CSR</th>
+              <th>ISR</th>
+              <th>CSR</th>
+              <th>ISR</th>
+              <th>Visual CSR</th>
+              <th>Audio CSR</th>
+              <th>AV CSR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Human</td><td>83.29</td><td>35.31</td><td>94.83</td><td>84.19</td><td>78.23</td><td>40.19</td><td>78.38</td><td>80.05</td><td>72.43</td></tr>
+            <tr class="group"><td colspan="10">Closed-Source Large Multimodal Models</td></tr>
+            <tr><td>Gemini-3.1-Pro</td><td>79.80</td><td>30.86</td><td>89.78</td><td>80.89</td><td>74.57</td><td>36.82</td><td>74.91</td><td>77.37</td><td>70.57</td></tr>
+            <tr><td>Gemini-3-Flash</td><td>78.70</td><td>29.04</td><td>85.75</td><td>74.17</td><td>75.01</td><td>37.26</td><td>75.20</td><td>76.73</td><td>71.67</td></tr>
+            <tr><td>MiMo-V2-Omni</td><td>74.59</td><td>22.18</td><td>81.55</td><td>67.28</td><td>70.93</td><td>31.84</td><td>70.92</td><td>73.60</td><td>67.85</td></tr>
+            <tr><td>Gemini-2.5-Pro</td><td>74.06</td><td>24.58</td><td>81.70</td><td>68.84</td><td>70.05</td><td>32.08</td><td>71.82</td><td>74.11</td><td>65.30</td></tr>
+            <tr class="group"><td colspan="10">Open-Source Large Multimodal Models</td></tr>
+            <tr><td>Qwen3-Omni-30B-A3B-Thinking</td><td>72.58</td><td>19.42</td><td>84.48</td><td>72.55</td><td>66.33</td><td>25.00</td><td>67.71</td><td>72.30</td><td>59.70</td></tr>
+            <tr><td>Qwen3-Omni-30B-A3B-Instruct</td><td>67.44</td><td>14.27</td><td>79.46</td><td>64.14</td><td>61.14</td><td>20.05</td><td>64.09</td><td>64.88</td><td>55.07</td></tr>
+            <tr><td>MiniCPM-o-4.5-9B</td><td>66.40</td><td>12.81</td><td>77.00</td><td>60.38</td><td>60.83</td><td>19.32</td><td>62.98</td><td>67.25</td><td>53.38</td></tr>
+            <tr><td>Qwen2.5-Omni-7B</td><td>57.44</td><td>7.55</td><td>66.78</td><td>46.52</td><td>52.54</td><td>12.76</td><td>57.13</td><td>57.14</td><td>44.18</td></tr>
+            <tr><td>Qwen2.5-Omni-3B</td><td>51.07</td><td>4.74</td><td>60.44</td><td>39.78</td><td>46.16</td><td>9.06</td><td>53.42</td><td>51.09</td><td>36.31</td></tr>
+            <tr><td>video-SALMONN-2-7B</td><td>44.58</td><td>1.88</td><td>47.80</td><td>23.99</td><td>42.89</td><td>6.05</td><td>47.28</td><td>48.94</td><td>34.86</td></tr>
+            <tr><td>MiniCPM-o-2.6-8B</td><td>43.39</td><td>1.67</td><td>40.85</td><td>18.07</td><td>44.72</td><td>6.58</td><td>51.26</td><td>49.88</td><td>37.14</td></tr>
+            <tr><td>HumanOmniV2-7B</td><td>41.85</td><td>2.40</td><td>37.86</td><td>18.18</td><td>43.95</td><td>7.10</td><td>51.04</td><td>48.16</td><td>36.54</td></tr>
+            <tr><td>ASID-Captioner-7B</td><td>33.87</td><td>1.04</td><td>22.70</td><td>7.74</td><td>39.72</td><td>6.20</td><td>48.45</td><td>46.48</td><td>30.50</td></tr>
+            <tr><td>ARC-Hunyuan-Video-7B</td><td>29.74</td><td>0.31</td><td>20.27</td><td>5.75</td><td>34.71</td><td>4.17</td><td>44.51</td><td>37.24</td><td>26.62</td></tr>
+            <tr class="group"><td colspan="10">Ours</td></tr>
+            <tr class="ours"><td>OmniCaptioner-IF-7B</td><td>72.59</td><td>18.28</td><td>89.09</td><td>79.46</td><td>63.94</td><td>22.08</td><td>63.82</td><td>68.81</td><td>59.02</td></tr>
+            <tr class="ours"><td>OmniCaptioner-IF-3B</td><td>69.09</td><td>13.28</td><td>86.78</td><td>74.96</td><td>59.81</td><td>16.93</td><td>61.57</td><td>64.25</td><td>54.04</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="analysis">
+      <h2>Analysis</h2>
+      <p>
+        OmniCap-IF reveals a format-content tradeoff: as structural requirements become more complex,
+        models often lose semantic fidelity. The benchmark also shows bottlenecks in JSON, timestamp formatting,
+        editing transitions, temporal grounding, and modality anchoring.
+      </p>
+      <div class="figure-grid">
+        <figure class="card figure">
+          <img src="./static/images/complexity_analysis.png" alt="Impact of instruction complexity" />
+          <figcaption><b>Instruction complexity.</b> Increasing constraint count and instruction length strains model adherence.</figcaption>
+        </figure>
+        <figure class="card figure">
+          <img src="./static/images/tradeoff_fps_synergy.png" alt="Format-content tradeoff and FPS analysis" />
+          <figcaption><b>Tradeoff.</b> Increasing formatting complexity degrades content correctness.</figcaption>
+        </figure>
+      </div>
+      <figure class="card figure">
+        <img src="./static/images/constraint_analysis.png" alt="Constraint type analysis" />
+        <figcaption><b>Constraint type analysis.</b> Current OLLMs show strong variation across format and audio-visual constraint types, with timestamps, anchors, and temporal grounding remaining especially challenging.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="dataset-samples">
+      <h2>Appendix Dataset Samples</h2>
+      <p class="muted">All dataset samples from Appendix E are included below.</p>
+
+      <div class="sample-block">
+        <h3>Data Sample 1 <span class="tag">defensive play</span></h3>
+        <video controls preload="metadata" width="100%" src="./videos/001.mp4"></video>
+        <details class="details sample-json"><summary>Show prompts and checklists</summary><div class="details-body"><pre class="language-json">{
+  "video_id": "001",
+  "prompt": "Analyze the defensive play scene around 00:08. Use a Markdown table with columns 'Timestamp', 'Visual Action', 'Audio Content', and 'Character State'. Record the exact moment the character blocks the ball, his spoken line \"Not in my house\", and his subsequent landing. If the landing produces a squishing sound, you must describe the process of his landing.",
+  "format_checks": [
+    {
+      "check_id": "format-001",
+      "constraint_id": "table",
+      "check_description": "Use a Markdown table with columns 'Timestamp', 'Visual Action', 'Audio Content', and 'Character State'.",
+      "parameters": {
+        "col_name": ["Timestamp", "Visual Action", "Audio Content", "Character State"]
+      }
+    }
+  ],
+  "content_checks": [
+    {
+      "check_id": "content-001",
+      "constraint_id": "omni_events_actions",
+      "check_content": "Use a Markdown table with columns 'Visual Action', 'Audio Content', and 'Character State'.",
+      "questions": [
+        {
+          "question": "Does the response try to analyze the defensive play scene as required?",
+          "options": ["A. Yes", "B. No"],
+          "correct_answer": "A"
+        },
+        {
+          "question": "How does the character block the ball in the scene around 00:08?",
+          "options": ["A. He jumps high and swats the ball away", "B. He stands on the ground and grabs the ball", "C. He kicks the ball out of the air", "D. None of the above"],
+          "correct_answer": "A"
+        },
+        {
+          "question": "What is the character's state immediately after blocking the ball?",
+          "options": ["A. He falls to the ground", "B. He runs to the other side of the court", "C. He holds the ball while standing still", "D. None of the above"],
+          "correct_answer": "C"
+        },
+        {
+          "question": "What sound does the muscular man make during the landing?",
+          "options": ["A. Laughter", "B. Grunt", "C. Shout", "D. None of the above"],
+          "correct_answer": "D"
+        }
+      ]
+    },
+    {
+      "check_id": "content-002",
+      "constraint_id": "visual_temporal_grounding",
+      "check_content": "Record the exact moment the character blocks the ball.",
+      "question": "According to the video, at what exact moment does the character block (grab) the ball?",
+      "correct_answer": "00:11"
+    },
+    {
+      "check_id": "content-003",
+      "constraint_id": "audio_temporal_grounding",
+      "check_content": "Record the exact moment of his spoken line 'Not in my house'.",
+      "question": "According to the video, when does the character start saying the line 'Not in my house'?",
+      "correct_answer": "00:13"
+    },
+    {
+      "check_id": "content-004",
+      "constraint_id": "omni_specific",
+      "check_content": "If the landing produces a squishing sound, describe the landing process.",
+      "questions": [
+        {
+          "question": "Does the response describe a landing process and explain a squishing sound?",
+          "options": ["A. Yes", "B. No"],
+          "correct_answer": "A"
+        },
+        {
+          "question": "Regarding the subsequent landing of the character who blocked the ball, which statement is factually correct?",
+          "options": ["A. He lands heavily, producing a loud squishing sound", "B. He lands softly on his toes", "C. He does not land because he did not jump to block the ball", "D. He lands simultaneously with Bugs Bunny"],
+          "correct_answer": "C"
+        },
+        {
+          "question": "Who actually hits the ground (lands) in the sequence?",
+          "options": ["A. The Crusher (the blocker)", "B. The referee", "C. Bugs Bunny", "D. None of the above"],
+          "correct_answer": "D"
+        }
+      ]
+    }
+  ]
+}</pre></div></details>
+      </div>
+
+      <div class="sample-block">
+        <h3>Data Sample 2 <span class="tag">magician interaction</span></h3>
+        <video controls preload="metadata" width="100%" src="./videos/340.mp4"></video>
+        <details class="details sample-json"><summary>Show prompts and checklists</summary><div class="details-body"><pre class="language-json">{
+  "video_id": "340",
+  "prompt": "Please analyze the initial interaction between the magician and the participant named Marlon. Use a JSON object to extract exactly two pieces of information: 'magician_request' (recognizing the specific words the magician says) and 'participant_compliance' (recording the participants' actions in detail).",
+  "format_checks": [
+    {
+      "check_id": "format-001",
+      "constraint_id": "json_object",
+      "check_description": "Use a JSON object to extract exactly two pieces of information: 'magician_request' and 'participant_compliance'.",
+      "parameters": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "magician_request": {"type": "string"},
+            "participant_compliance": {"type": "string"}
+          },
+          "required": ["magician_request", "participant_compliance"]
+        }
+      }
+    },
+    {
+      "check_id": "format-002",
+      "constraint_id": "count",
+      "check_description": "Extract exactly two pieces of information.",
+      "parameters": {"min_count": 2, "max_count": 2}
+    }
+  ],
+  "content_checks": [
+    {
+      "check_id": "content-001",
+      "constraint_id": "audio_specific",
+      "check_content": "Recognize the specific words the magician says for 'magician_request'.",
+      "questions": [
+        {
+          "question": "Does the value for 'magician_request' contain quoted speech or a transcription of what the magician said?",
+          "options": ["A. Yes", "B. No"],
+          "correct_answer": "A"
+        },
+        {
+          "question": "Which quote accurately reflects the magician's initial request to the participant?",
+          "options": ["A. \"Can you hand me a one-dollar bill?\"", "B. \"I need you to give me a fifty.\"", "C. \"I want to do a trick with some money. You got your wallet?\"", "D. None of the above"],
+          "correct_answer": "C"
+        }
+      ]
+    },
+    {
+      "check_id": "content-002",
+      "constraint_id": "visual_events_actions",
+      "check_content": "Record the participants' actions in detail for 'participant_compliance'.",
+      "questions": [
+        {
+          "question": "Does the value for 'participant_compliance' describe the physical movements or actions of the participant?",
+          "options": ["A. Yes", "B. No"],
+          "correct_answer": "A"
+        },
+        {
+          "question": "What specific actions does the participant take in response to the magician's request?",
+          "options": ["A. He retrieves his wallet and hands it to the magician", "B. He takes off his sunglasses and hands them to the magician", "C. He cuts a dollar bill in half with scissors", "D. None of the above"],
+          "correct_answer": "A"
+        }
+      ]
+    }
+  ]
+}</pre></div></details>
+      </div>
+
+      <div class="sample-block">
+        <h3>Data Sample 3 <span class="tag">Cook once, eat twice</span></h3>
+        <video controls preload="metadata" width="100%" src="./videos/341.mp4"></video>
+        <details class="details sample-json"><summary>Show prompts and checklists</summary><div class="details-body"><pre class="language-json">{
+  "video_id": "341",
+  "prompt": "Search for the 'Cook once, eat twice' segment. Output in ALL CAPS using '|' as a delimiter. First, provide the timestamp interval [MM:SS-MM:SS] where the text overlay matches the spoken phrase; second, describe the grill marks on the chicken; third, infer if the speaker is the dietitian or the narrator based on the voice texture.",
+  "format_checks": [
+    {
+      "check_id": "format-001",
+      "constraint_id": "case",
+      "check_description": "Output in ALL CAPS.",
+      "parameters": {"schema": "upper"}
+    },
+    {
+      "check_id": "format-002",
+      "constraint_id": "delimiter",
+      "check_description": "Use '|' as a delimiter.",
+      "parameters": {"symbol": "|"}
+    },
+    {
+      "check_id": "format-003",
+      "constraint_id": "timestamp_format",
+      "check_description": "Provide the timestamp interval [MM:SS-MM:SS].",
+      "parameters": {"format_type": "period"}
+    }
+  ],
+  "content_checks": [
+    {
+      "check_id": "content-001",
+      "constraint_id": "omni_temporal_grounding",
+      "check_content": "Provide the timestamp interval where the text overlay matches the spoken phrase.",
+      "question": "According to the video, what is the timestamp interval where the text overlay 'Cook once, eat twice' appears and matches the spoken phrase?",
+      "correct_answer": "00:18 - 00:20"
+    },
+    {
+      "check_id": "content-002",
+      "constraint_id": "visual_specific",
+      "check_content": "Describe the grill marks on the chicken.",
+      "questions": [
+        {
+          "question": "Does the response attempt to describe the grill marks on the chicken?",
+          "options": ["A. Yes", "B. No"],
+          "correct_answer": "A"
+        },
+        {
+          "question": "Which pattern correctly describes the grill marks on the chicken in the identified segment?",
+          "options": ["A. Grid-like pattern", "B. A circular branded pattern", "C. A random, spotless browning", "D. None of the above"],
+          "correct_answer": "A"
+        }
+      ]
+    },
+    {
+      "check_id": "content-003",
+      "constraint_id": "audio_inference",
+      "check_content": "Infer if the speaker is the dietitian or the narrator based on the voice texture.",
+      "questions": [
+        {
+          "question": "Does the response infer whether the speaker is the dietitian or the narrator?",
+          "options": ["A. Yes", "B. No"],
+          "correct_answer": "A"
+        },
+        {
+          "question": "Based on the voice texture, who is the speaker of the phrase 'Cook once, eat twice'?",
+          "options": ["A. The Dietitian (Cathy Deimeke)", "B. The Narrator", "C. A male chef", "D. Cannot be determined"],
+          "correct_answer": "B"
+        }
+      ]
+    }
+  ]
+}</pre></div></details>
+      </div>
+    </section>
+
+    <section class="section" id="error-examples">
+      <h2>Appendix Error Examples</h2>
+      <p class="muted">Representative error examples from Appendix F are shown with the baseline output, error analysis, and OmniCaptioner-IF output.</p>
+
+      <div class="case-block">
+        <h3>Example 1 <span class="tag">Rules of Padel</span></h3>
+        <video controls preload="metadata" width="100%" src="./videos/184.mp4"></video>
+        <div class="prompt-box"><b>Prompt</b>Use a JSON object to analyze the "Rules of Padel" segment [00:13-00:25]. The object must contain exactly three keys: "rule_text_overlay", "spoken_explanation", and "consistency_check".</div>
+        <div class="output-panel"><h4>Caption by Qwen2.5-Omni-7B</h4><pre>{ "rule_text_overlay": { "start_time": "00:13", "end_time": "00:25", "content": "Ball has to hit floor first, play off side and back walls, thinking person's sport, easy to learn hard to master, play and have fun right away." }, "spoken_explanation": "The speaker explains the rules of padel, emphasizing that the ball must first hit the floor before being played off the walls, highlighting that it is a thinking person's sport that is easy to learn but hard to master, and encouraging players to have fun immediately.", "consistency_check": "The audio elaborates on the text by providing additional context and explanation about the rules and the nature of the game." }</pre></div>
+        <div class="output-panel analysis-panel"><h4>Error Analysis</h4>
+          <ul class="error-list">
+            <li>Instruction violation: the baseline summarized commentary instead of transcribing it.</li>
+            <li>Content error: it hallucinated visual overlay text such as "thinking person's sport".</li>
+            <li>Format violation: it over-complicated the schema with a nested object rather than simple string fields.</li>
+          </ul>
+        </div>
+        <div class="output-panel ours-panel"><h4>Caption by OmniCaptioner-IF-7B</h4><pre>{ "rule_text_overlay": "START WITH UNDERHAND SERVE, BALL HAS TO HIT FLOOR FIRST, PLAY OFF SIDE AND BACK WALLS", "spoken_explanation": "You start with an underhand serve. After you serve, the ball has to bounce onto the turf, and you can play off the walls and play off the side.", "consistency_check": "The audio elaborates on the rules by providing specific instructions on the serve and the bounce requirement, whereas the text overlays are static visual labels." }</pre></div>
+      </div>
+
+      <div class="case-block">
+        <h3>Example 2 <span class="tag">first-person perspective</span></h3>
+        <video controls preload="metadata" width="100%" src="./videos/342.mp4"></video>
+        <div class="prompt-box"><b>Prompt</b>Adopt the first-person perspective of the male character. Describe frustration with the woman in the white blouse, interruption by the woman in red, and the return to the dramatic monologue. Use an ordered list starting with "I.", and include [MM:SS] timestamps.</div>
+        <div class="output-panel"><h4>Caption by Qwen2.5-Omni-7B</h4><pre>1. I am frustrated with the woman in the white blouse. She is constantly interrupting me, and I feel like she doesn't understand my situation. This is evident from the timestamp [00:00.00] to [00:05.00].
+2. The woman in red, wearing a striped top, interrupts me again. She seems to be trying to get my attention, but I am not interested in her. This happens at the timestamp [00:05.00] to [00:10.00].
+3. I return to my dramatic monologue, expressing my belief in myself and my determination to succeed. This is shown at the timestamp [00:10.00] to [00:20.00].</pre></div>
+        <div class="output-panel analysis-panel"><h4>Error Analysis</h4>
+          <ul class="error-list">
+            <li>Format violation: the baseline used Arabic numerals instead of Roman numeral list markers.</li>
+            <li>Format violation: it produced ranges with milliseconds instead of [MM:SS] timestamps.</li>
+            <li>Content error: it misattributed the interruption and hallucinated the woman's intent.</li>
+          </ul>
+        </div>
+        <div class="output-panel ours-panel"><h4>Caption by OmniCaptioner-IF-7B</h4><pre>I. [00:00] I am walking through the room when I hear the woman in the white blouse shouting at me to go away, which is incredibly frustrating because I've only just come back from a long journey. II. [00:05] Suddenly, the woman in the red pants and striped top bursts through the door, shouting "Monica!" and interrupting my thoughts, causing me to stop and turn around in disbelief. III. [00:14] I quickly regain my composure and resume my dramatic monologue, gesturing wildly with my hands to emphasize my point about being the breadwinner and how my self-belief is being undermined.</pre></div>
+      </div>
+
+      <div class="case-block">
+        <h3>Example 3 <span class="tag">jeep scene</span></h3>
+        <video controls preload="metadata" width="100%" src="./videos/189.mp4"></video>
+        <div class="prompt-box"><b>Prompt</b>Generate a production script for the jeep scene in a JSON array with time_range, visual_shot, audio_line, and editing_note. Locate the source of the speech and confirm lip synchronization.</div>
+        <div class="output-panel"><h4>Caption by Qwen2.5-Omni-7B</h4><pre>[ { "time_range": "00:36:44-00:37:00", "visual_shot": "A man wearing sunglasses and making hand gestures", "audio_line": "I drink your milkshake", "editing_note": "No cuts" } ]</pre></div>
+        <div class="output-panel analysis-panel"><h4>Error Analysis</h4>
+          <ul class="error-list">
+            <li>Temporal error: the baseline used malformed and hallucinated timestamps.</li>
+            <li>Audio hallucination: it output the unrelated quote "I drink your milkshake".</li>
+            <li>Editing error: it missed the actual cut.</li>
+            <li>Instruction violation: it ignored source localization and lip synchronization.</li>
+          </ul>
+        </div>
+        <div class="output-panel ours-panel"><h4>Caption by OmniCaptioner-IF-7B</h4><pre>[ { "time_range": "[00:20-00:28]", "visual_shot": "The character wears dark sunglasses and gestures with his right hand while sitting in the driver's seat of a jeep.", "audio_line": "See here I'm now by myself, talking to myself. That's, that's chaos theory.", "editing_note": "The scene uses a medium shot with a slight cut to a close-up as the character begins his explanation." } ] The lip movements of the character are perfectly synchronized with the audio, confirming the source is the character in the jeep.</pre></div>
+      </div>
+
+      <div class="case-block">
+        <h3>Example 4 <span class="tag">audio anchor</span></h3>
+        <video controls preload="metadata" width="100%" src="./videos/324.mp4"></video>
+        <div class="prompt-box"><b>Prompt</b>Construct a table using audio phrases such as "boiling water" and "refrigerator" as anchors, describe the corresponding visual actions, whether the speaker is visible, and [MM:SS] timestamps.</div>
+        <div class="output-panel"><h4>Caption by Qwen2.5-Omni-3B</h4><pre>Empty row Timestamp | Audio Trigger | Visual Action | Speaker Visible
+00:00:00.00 | Let's say that you just made a whole tray of absolutely delicious bacon | Chef holds up a piece of bacon | True
+00:00:00.00 | and after removing all of said bacon you're left with a whole lot of delicious bacon fat | Chef places the bacon on a paper towel | True
+00:00:00.00 | now you could just wait till it hardens and then throw it in the trash but that would be a waste or you could save it in a jar | Chef pours bacon fat into a jar | True
+...(repeat the above two lines until truncated)</pre></div>
+        <div class="output-panel analysis-panel"><h4>Error Analysis</h4>
+          <ul class="error-list">
+            <li>Audio anchoring failure: the baseline ignored the specific trigger phrases.</li>
+            <li>Temporal collapse: every row was assigned 00:00:00.00.</li>
+            <li>Generation failure: the output degenerated into a repeated loop.</li>
+          </ul>
+        </div>
+        <div class="output-panel ours-panel"><h4>Caption by OmniCaptioner-IF-3B</h4><pre>| Audio Trigger | Visual Action | Speaker Visible | Timestamp |
+| Boiling water | The chef pours the bacon grease into a glass jar and then uses his right hand to swirl the mixture inside the jar. | True | [00:21] |
+| Refrigerator | The chef places the sealed jar upside down into the refrigerator. | True | [00:31] |
+| Bacon fat | The chef pours the liquid from the jar into a metal bowl. | True | [00:35] |</pre></div>
+      </div>
+    </section>
+
+    <section class="section" id="citation">
+      <h2>Citation</h2>
+      <div class="card codebox">
+        <button class="copybtn" id="copybtn" onclick="copyBibtex()">Copy BibTeX</button>
+        <pre id="bibtex">@article{wang2026omnicapif,
+  title   = {OmniCap-IF: Benchmarking and Improving Instruction Following Abilities for Omni-Video Captioning},
+  author  = {Wang, Jiahao and Ping, An and Wang, Yanghai and Zhang, Yuanxing and Li, Shihao and Bian, Hanyan and Ren, Yichi and Zhang, Yize and Wang, Han and Chen, Haowen and Li, Junze and Wang, Jiaqi and Hu, Yiyang and Xu, Zhuze and Zhang, Zijie and Liu, Jiaheng},
+  journal = {Preprint},
+  year    = {2026}
+}</pre>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">&copy; 2026 OmniCap-IF &middot; NJU-LINK</div>
+  </footer>
+  <script src="./static/js/main.js"></script>
+</body>
+</html>

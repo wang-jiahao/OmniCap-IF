@@ -1,0 +1,17 @@
+{
+  "001": {
+    "duration": "00:54",
+    "path": "videos/001.mp4",
+    "type": "Film & TV"
+  },
+  "340": {
+    "duration": "01:05",
+    "path": "videos/340.mp4",
+    "type": "Film & TV"
+  },
+  "341": {
+    "duration": "01:00",
+    "path": "videos/341.mp4",
+    "type": "Daily Life"
+  }
+}

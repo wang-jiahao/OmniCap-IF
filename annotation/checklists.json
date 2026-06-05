@@ -1,0 +1,373 @@
+{
+  "001": [
+    {
+      "field": "For Understanding",
+      "generated_prompt": "Analyze the defensive play scene around 00:08. Use a Markdown table with columns 'Timestamp', 'Visual Action', 'Audio Content', and 'Character State'. Record the exact moment the character blocks the ball, his spoken line \"Not in my house\", and his subsequent landing. If the landing produces a squishing sound, you must describe the process of his landing.",
+      "constraints_used": [
+        "table",
+        "omni_events_actions",
+        "visual_temporal_grounding",
+        "audio_temporal_grounding",
+        "omni_specific"
+      ],
+      "checklist": {
+        "format_check": [
+          {
+            "check_id": "format-001",
+            "constraint_id": "table",
+            "check_description": "Use a Markdown table with columns 'Timestamp', 'Visual Action', 'Audio Content', and 'Character State'.",
+            "parameters": {
+              "content": null,
+              "col_name": [
+                "Timestamp",
+                "Visual Action",
+                "Audio Content",
+                "Character State"
+              ]
+            }
+          }
+        ],
+        "content_check": [
+          {
+            "check_content": "Use a Markdown table with columns 'Visual Action', 'Audio Content', and 'Character State'. ",
+            "constraint_id": "omni_events_actions",
+            "check_items": [
+              {
+                "check_id": "content-001",
+                "check_type": "attempt",
+                "question": "Does the response try to analyze the defensive play scene as required?",
+                "options": [
+                  "yes",
+                  "no"
+                ],
+                "correct_answer": "yes"
+              },
+              {
+                "check_id": "content-002",
+                "check_type": "correctness",
+                "question": "How does the character block the ball in the scene around 00:08?",
+                "options": [
+                  "A. He jumps high and swats the ball away",
+                  "B. He stands on the ground and grabs the ball",
+                  "C. He kicks the ball out of the air",
+                  "D. None of the above"
+                ],
+                "correct_answer": "B"
+              },
+              {
+                "check_id": "content-003",
+                "check_type": "correctness",
+                "question": "What is the character's state immediately after blocking the ball?",
+                "options": [
+                  "A. He falls to the ground",
+                  "B. He runs to the other side of the court",
+                  "C. He holds the ball while standing still",
+                  "D. None of the above"
+                ],
+                "correct_answer": "C"
+              },
+              {
+                "check_id": "content-004",
+                "check_type": "correctness",
+                "question": "What sound does the muscular man make during the landing?",
+                "options": [
+                  "A. Laughter",
+                  "B. Grunt",
+                  "C. Shout",
+                  "D. None of the above"
+                ],
+                "correct_answer": "B"
+              }
+            ]
+          },
+          {
+            "check_content": "Record the exact moment the character blocks the ball",
+            "constraint_id": "visual_temporal_grounding",
+            "check_items": [
+              {
+                "check_id": "content-005",
+                "check_type": "timestamp",
+                "question": "According to the video, at what exact moment does the character block (grab) the ball?",
+                "correct_answer": "00:11"
+              }
+            ]
+          },
+          {
+            "check_content": "Record the exact moment of his spoken line 'Not in my house'",
+            "constraint_id": "audio_temporal_grounding",
+            "check_items": [
+              {
+                "check_id": "content-006",
+                "check_type": "timestamp",
+                "question": "According to the video, when does the character start saying the line 'Not in my house'?",
+                "correct_answer": "00:13"
+              }
+            ]
+          },
+          {
+            "check_content": "If the landing produces a squishing sound, describe the process and explain the sound",
+            "constraint_id": "omni_specific",
+            "check_items": [
+              {
+                "check_id": "content-007",
+                "check_type": "attempt",
+                "question": "Does the response describe a landing process and explain a squishing sound?",
+                "options": [
+                  "yes",
+                  "no"
+                ],
+                "correct_answer": "yes"
+              },
+              {
+                "check_id": "content-008",
+                "check_type": "correctness",
+                "question": "Regarding the 'subsequent landing' of the character who blocked the ball (the Crusher), which statement is factually correct for this specific scene?",
+                "options": [
+                  "A. He lands heavily, producing a loud squishing sound",
+                  "B. He lands softly on his toes",
+                  "C. He does not land because he did not jump to block the ball",
+                  "D. He lands simultaneously with Bugs Bunny"
+                ],
+                "correct_answer": "C"
+              },
+              {
+                "check_id": "content-009",
+                "check_type": "correctness",
+                "question": "Who actually hits the ground (lands) in the sequence?",
+                "options": [
+                  "A. The Crusher (the blocker)",
+                  "B. The referee",
+                  "C. Bugs Bunny",
+                  "D. None of the above"
+                ],
+                "correct_answer": "D"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "340": [
+    {
+      "field": "For Understanding",
+      "generated_prompt": "Please analyze the initial interaction between the magician and the participant named Marlon. Use a JSON object to extract exactly two pieces of information: 'magician_request'(recognizing the specific words the magician says) and 'participant_compliance'(recording the participants' actions in detail).",
+      "constraints_used": [
+        "json_object",
+        "count",
+        "audio_specific",
+        "visual_events_actions"
+      ],
+      "checklist": {
+        "format_check": [
+          {
+            "check_id": "format-001",
+            "constraint_id": "json_object",
+            "check_description": "Use a JSON object to extract exactly two pieces of information: 'magician_request' and 'participant_compliance'.",
+            "parameters": {
+              "content": null,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "magician_request": {
+                    "type": "string"
+                  },
+                  "participant_compliance": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "magician_request",
+                  "participant_compliance"
+                ]
+              }
+            }
+          },
+          {
+            "check_id": "format-002",
+            "constraint_id": "count",
+            "check_description": "extract exactly two pieces of information",
+            "parameters": {
+              "content": null,
+              "min_count": 2,
+              "max_count": 2
+            }
+          }
+        ],
+        "content_check": [
+          {
+            "check_content": "Recognize the specific words the magician says for 'magician_request'",
+            "constraint_id": "audio_specific",
+            "check_items": [
+              {
+                "check_id": "content-001",
+                "check_type": "attempt",
+                "question": "Does the value for 'magician_request' contain quoted speech or a transcription of what the magician said?",
+                "options": [
+                  "yes",
+                  "no"
+                ],
+                "correct_answer": "yes"
+              },
+              {
+                "check_id": "content-002",
+                "check_type": "correctness",
+                "question": "Which of the following quotes accurately reflects the magician's initial request to the participant?",
+                "options": [
+                  "A. \"Can you hand me a one-dollar bill?\"",
+                  "B. \"I need you to give me a fifty.\"",
+                  "C. \"I want to do a trick with some money. You got your wallet?\"",
+                  "D. None of the above"
+                ],
+                "correct_answer": "C"
+              }
+            ]
+          },
+          {
+            "check_content": "Record the participants' actions in detail for 'participant_compliance'",
+            "constraint_id": "visual_events_actions",
+            "check_items": [
+              {
+                "check_id": "content-003",
+                "check_type": "attempt",
+                "question": "Does the value for 'participant_compliance' describe the physical movements or actions of the participant?",
+                "options": [
+                  "yes",
+                  "no"
+                ],
+                "correct_answer": "yes"
+              },
+              {
+                "check_id": "content-004",
+                "check_type": "correctness",
+                "question": "What specific actions does the participant take in response to the magician's request?",
+                "options": [
+                  "A. He retrieves his wallet and hands it to the magician",
+                  "B. He takes off his sunglasses and hands them to the magician",
+                  "C. He cuts a dollar bill in half with scissors",
+                  "D. None of the above"
+                ],
+                "correct_answer": "A"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "341": [
+    {
+      "field": "For Retrieval",
+      "generated_prompt": "Search for the 'Cook once, eat twice' segment. Output in ALL CAPS using '|' as a delimiter. First, provide the timestamp interval [MM:SS-MM:SS] where the text overlay matches the spoken phrase; second, describe the grill marks on the chicken; third, infer if the speaker is the dietitian or the narrator based on the voice texture.",
+      "constraints_used": [
+        "case",
+        "delimiter",
+        "timestamp_format",
+        "omni_temporal_grounding",
+        "visual_specific",
+        "audio_inference"
+      ],
+      "checklist": {
+        "format_check": [
+          {
+            "check_id": "format-001",
+            "constraint_id": "case",
+            "check_description": "Output in ALL CAPS.",
+            "parameters": {
+              "content": null,
+              "case_type": "upper"
+            }
+          },
+          {
+            "check_id": "format-002",
+            "constraint_id": "delimiter",
+            "check_description": "Use '|' as a delimiter.",
+            "parameters": {
+              "content": null,
+              "symbol": "|"
+            }
+          },
+          {
+            "check_id": "format-003",
+            "constraint_id": "timestamp_format",
+            "check_description": "Provide the timestamp interval [MM:SS-MM:SS].",
+            "parameters": {
+              "content": null,
+              "format_type": "period"
+            }
+          }
+        ],
+        "content_check": [
+          {
+            "check_content": "Provide the timestamp interval where the text overlay matches the spoken phrase",
+            "constraint_id": "omni_temporal_grounding",
+            "check_items": [
+              {
+                "check_id": "content-001",
+                "check_type": "timestamp",
+                "question": "According to the video, what is the timestamp interval where the text overlay 'Cook once, eat twice' appears and matches the spoken phrase?",
+                "correct_answer": "00:18 - 00:20"
+              }
+            ]
+          },
+          {
+            "check_content": "Describe the grill marks on the chicken",
+            "constraint_id": "visual_specific",
+            "check_items": [
+              {
+                "check_id": "content-002",
+                "check_type": "attempt",
+                "question": "Does the response attempt to describe the grill marks on the chicken?",
+                "options": [
+                  "yes",
+                  "no"
+                ],
+                "correct_answer": "yes"
+              },
+              {
+                "check_id": "content-003",
+                "check_type": "correctness",
+                "question": "Which of the following patterns correctly describes the grill marks on the chicken in the identified segment?",
+                "options": [
+                  "A. Grid-like pattern",
+                  "B. A circular branded pattern",
+                  "C. A random, spotless browning",
+                  "D. None of the above"
+                ],
+                "correct_answer": "A"
+              }
+            ]
+          },
+          {
+            "check_content": "Infer if the speaker is the dietitian or the narrator based on the voice texture",
+            "constraint_id": "audio_inference",
+            "check_items": [
+              {
+                "check_id": "content-004",
+                "check_type": "attempt",
+                "question": "Does the response infer whether the speaker is the dietitian or the narrator?",
+                "options": [
+                  "yes",
+                  "no"
+                ],
+                "correct_answer": "yes"
+              },
+              {
+                "check_id": "content-005",
+                "check_type": "correctness",
+                "question": "Based on the voice texture, who is the speaker of the phrase 'Cook once, eat twice'?",
+                "options": [
+                  "A. The Dietitian (Cathy Deimeke)",
+                  "B. The Narrator",
+                  "C. A male chef",
+                  "D. Cannot be determined"
+                ],
+                "correct_answer": "B"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

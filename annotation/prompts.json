@@ -1,0 +1,41 @@
+{
+  "001": [
+    {
+      "field": "For Understanding",
+      "generated_prompt": "Analyze the defensive play scene around 00:08. Use a Markdown table with columns 'Timestamp', 'Visual Action', 'Audio Content', and 'Character State'. Record the exact moment the character blocks the ball, his spoken line \"Not in my house\", and his subsequent landing. If the landing produces a squishing sound, you must describe the process of his landing.",
+      "constraints_used": [
+        "table",
+        "omni_events_actions",
+        "visual_temporal_grounding",
+        "audio_temporal_grounding",
+        "omni_specific"
+      ]
+    }
+  ],
+  "340": [
+    {
+      "field": "For Understanding",
+      "generated_prompt": "Please analyze the initial interaction between the magician and the participant named Marlon. Use a JSON object to extract exactly two pieces of information: 'magician_request'(recognizing the specific words the magician says) and 'participant_compliance'(recording the participants' actions in detail).",
+      "constraints_used": [
+        "json_object",
+        "count",
+        "audio_specific",
+        "visual_events_actions"
+      ]
+    }
+  ],
+  "341": [
+    {
+      "field": "For Retrieval",
+      "generated_prompt": "Search for the 'Cook once, eat twice' segment. Output in ALL CAPS using '|' as a delimiter. First, provide the timestamp interval [MM:SS-MM:SS] where the text overlay matches the spoken phrase; second, describe the grill marks on the chicken; third, infer if the speaker is the dietitian or the narrator based on the voice texture.",
+      "constraints_used": [
+        "case",
+        "delimiter",
+        "timestamp_format",
+        "omni_temporal_grounding",
+        "visual_specific",
+        "audio_inference"
+      ]
+    }
+  ]
+}
