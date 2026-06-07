@@ -4,13 +4,13 @@
 &nbsp;
 [![Paper](https://img.shields.io/badge/arXiv-2606.xxxxx-b31b1b)](https://arxiv.org/abs/2606.xxxxx)
 &nbsp;
-[![Model 7B](https://img.shields.io/badge/Model-OmniCaptioner--IF--7B-2563eb)](https://huggingface.co/NJU-LINK/OmniCaptioner-IF-7B)
+[![Model 7B](https://img.shields.io/badge/%F0%9F%A4%97%20Model-OmniCaptioner--IF--7B-2563eb)](https://huggingface.co/NJU-LINK/OmniCaptioner-IF-7B)
 &nbsp;
-[![Model 3B](https://img.shields.io/badge/Model-OmniCaptioner--IF--3B-2563eb)](https://huggingface.co/NJU-LINK/OmniCaptioner-IF-3B)
+[![Model 3B](https://img.shields.io/badge/%F0%9F%A4%97%20Model-OmniCaptioner--IF--3B-2563eb)](https://huggingface.co/NJU-LINK/OmniCaptioner-IF-3B)
 &nbsp;
-[![Trainset](https://img.shields.io/badge/Trainset-OmniCap--IF--54K-059669)](https://huggingface.co/datasets/NJU-LINK/OmniCap-IF-54K)
+[![Trainset](https://img.shields.io/badge/%F0%9F%A4%97%20Trainset-OmniCap--IF--54K-059669)](https://huggingface.co/datasets/NJU-LINK/OmniCap-IF-54K)
 &nbsp;
-[![Testset](https://img.shields.io/badge/Testset-OmniCap--IF-d97706)](https://huggingface.co/datasets/NJU-LINK/OmniCap-IF)
+[![Testset](https://img.shields.io/badge/%F0%9F%A4%97%20Testset-OmniCap--IF-d97706)](https://huggingface.co/datasets/NJU-LINK/OmniCap-IF)
 
 ## Overview
 
