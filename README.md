@@ -2,7 +2,7 @@
 
 [![Project Page](https://img.shields.io/badge/Project%20Page-OmniCap--IF-1B2838?logo=githubpages&logoColor=white)](https://nju-link.github.io/OmniCap-IF/)
 &nbsp;
-[![Paper](https://img.shields.io/badge/arXiv-2606.xxxxx-b31b1b)](https://arxiv.org/abs/2606.xxxxx)
+[![Paper](https://img.shields.io/badge/arXiv-2606.08572-b31b1b)](https://arxiv.org/abs/2606.08572)
 &nbsp;
 [![Model 7B](https://img.shields.io/badge/%F0%9F%A4%97%20Model-OmniCaptioner--IF--7B-2563eb)](https://huggingface.co/NJU-LINK/OmniCaptioner-IF-7B)
 &nbsp;
@@ -203,10 +203,13 @@ Our dataset is under the CC-BY-NC-SA-4.0 license.
 ## Citation
 
 ```bibtex
-@article{wang2026omnicapif,
-  title   = {OmniCap-IF: Benchmarking and Improving Instruction Following Abilities for Omni-Video Captioning},
-  author  = {Wang, Jiahao and Ping, An and Wang, Yanghai and Zhang, Yuanxing and Li, Shihao and Bian, Hanyan and Ren, Yichi and Zhang, Yize and Wang, Han and Chen, Haowen and Li, Junze and Wang, Jiaqi and Hu, Yiyang and Xu, Zhuze and Zhang, Zijie and Liu, Jiaheng},
-  journal = {Preprint},
-  year    = {2026}
+@misc{wang2026omnicapifbenchmarkingimprovinginstruction,
+      title={OmniCap-IF: Benchmarking and Improving Instruction Following Abilities for Omni-Video Captioning}, 
+      author={Jiahao Wang and An Ping and Yanghai Wang and Yuanxing Zhang and Shihao Li and Hanyan Bian and Yichi Ren and Yize Zhang and Han Wang and Haowen Chen and Junze Li and Jiaqi Wang and Yiyang Hu and Zhuze Xu and Zijie Zhang and Jiaheng Liu},
+      year={2026},
+      eprint={2606.08572},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2606.08572}, 
 }
 ```
